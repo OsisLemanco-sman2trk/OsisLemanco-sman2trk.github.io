@@ -1,0 +1,5 @@
+[
+  {"id":"p1","title":"Contoh: Pekan Literasi","summary":"Contoh program kerja untuk melihat tampilan kartu.","status":"rencana","division":"Contoh bidang","period":"2026/2027","sample":true},
+  {"id":"p2","title":"Contoh: Turnamen Antarkelas","summary":"Contoh program kerja untuk melihat tampilan kartu.","status":"berjalan","division":"Contoh bidang","period":"2026/2027","sample":true},
+  {"id":"p3","title":"Contoh: Bakti Lingkungan","summary":"Contoh program kerja untuk melihat tampilan kartu.","status":"selesai","division":"Contoh bidang","period":"2026/2027","sample":true}
+]
