@@ -57,6 +57,13 @@
       btn.addEventListener('click', () => { const o = nav.classList.toggle('is-open'); btn.setAttribute('aria-expanded', o); });
     }
     const f = document.getElementById('site-footer');
+    if (f && !document.querySelector('.night')) {
+      const n = document.createElement('div');
+      n.className = 'night'; n.setAttribute('aria-hidden', 'true');
+      n.innerHTML = '<div class="stars"></div><div class="night-moon"><img src="assets/logo.png" alt="" width="120" height="120"></div>' +
+        '<svg class="hills" viewBox="0 0 100 20" preserveAspectRatio="none"><path d="M0 20V12Q15 4 30 11T60 9T100 7V20Z" fill="#17384F"/><path d="M0 20V15Q20 9 42 14T78 12T100 13V20Z" fill="#0E2A3F"/></svg>';
+      f.parentNode.insertBefore(n, f);
+    }
     if (f) {
       f.className = 'site-footer';
       const links = [['Situs ' + site.school, site.schoolUrl], ['YouTube', site.youtube], ['Instagram', site.instagram], ['TikTok', site.tiktok]]
@@ -197,6 +204,9 @@
   document.addEventListener('DOMContentLoaded', async () => {
     const site = (await load('site')) || { name: 'OSIS Lemanco', school: 'SMA Negeri 2 Tarakan', period: '', address: '' };
     layout(site);
+    document.dispatchEvent(new Event('osis:layout'));
+    const hero = document.getElementById('hero');
+    if (hero) requestAnimationFrame(() => { hero.classList.remove('is-prep'); hero.classList.add('is-ready'); });
     const page = document.body.dataset.page;
     const fn = { index: home, pengumuman: announcements, program: programs, kegiatan: kegiatan, pengurus: pengurus }[page];
     if (fn) fn(site);

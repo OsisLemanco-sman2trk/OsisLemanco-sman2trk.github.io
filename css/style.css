@@ -37,10 +37,10 @@ p{margin:0}
 }
 
 /* hero */
-.hero{background:var(--ink);color:#fff;padding:clamp(2.5rem,7vw,5rem) 0 clamp(2rem,5vw,3.5rem)}
+.hero{position:relative;isolation:isolate;overflow:hidden;background:radial-gradient(55% 62% at 78% 42%,rgba(63,154,216,.38),rgba(63,154,216,0) 70%),var(--ink);color:#fff;padding:clamp(2.5rem,7vw,5rem) 0 clamp(2rem,5vw,3.5rem)}
 .hero .wrap{display:grid;grid-template-columns:1.3fr .7fr;gap:2rem;align-items:center}
 .hero small{display:block;font-size:1.05rem;color:#BFD6E6;margin-bottom:.6rem}
-.hero h1{font-size:clamp(3.4rem,13vw,8.4rem);font-weight:800;line-height:.9;letter-spacing:-.035em}
+.hero h1{font-size:clamp(3.4rem,13vw,8.4rem);font-weight:800;line-height:.9;letter-spacing:-.02em}
 .hero p.lead{font-size:clamp(1.1rem,2.2vw,1.35rem);max-width:36ch;margin-top:1.2rem;color:#E4EEF5}
 .hero-logo{justify-self:center;width:min(100%,320px);aspect-ratio:1;border-radius:50%;background:#fff;box-shadow:0 0 0 10px rgba(63,154,216,.35),0 0 0 22px rgba(63,154,216,.15)}
 .hero-logo img{width:100%;height:100%}
@@ -51,7 +51,7 @@ p{margin:0}
 .btn-ghost{border-color:#6F8EA5;color:#fff}
 .btn-ghost:hover{background:rgba(255,255,255,.1)}
 .vband{display:block;width:100%;height:clamp(36px,6vw,84px);margin-top:-1px}
-@media(max-width:760px){.hero .wrap{grid-template-columns:1fr}.hero-logo{width:200px;order:-1;justify-self:start}}
+@media(max-width:760px){.hero .wrap{grid-template-columns:1fr}.hero-logo{width:190px;order:-1;justify-self:start;margin:22px 0 14px 22px}}
 
 /* sections */
 .section{padding:clamp(2.5rem,6vw,4.5rem) 0}
@@ -129,7 +129,7 @@ p{margin:0}
 .empty-state{padding:2rem;border:2px dashed var(--line);border-radius:16px;color:var(--ink-2);text-align:center}
 
 /* footer */
-.site-footer{background:var(--ink);color:#CFE0EC;padding:2.5rem 0 2rem;margin-top:3rem}
+.site-footer{background:var(--ink);color:#CFE0EC;padding:1rem 0 2rem;margin-top:0}
 .site-footer .wrap{display:grid;grid-template-columns:1.4fr 1fr;gap:2rem}
 .site-footer a{color:#fff}
 .site-footer strong{font-family:var(--f-display);font-size:1.2rem;color:#fff}
@@ -138,3 +138,35 @@ p{margin:0}
 @media(max-width:700px){.site-footer .wrap{grid-template-columns:1fr}}
 .is-filtered-out{display:none !important}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+/* cahaya hero (js/hero-light.js) */
+.hero .wrap{position:relative}
+.hero-rays{position:absolute;inset:0;z-index:-1;pointer-events:none;mix-blend-mode:screen;filter:blur(3px);opacity:.8;animation:rays-sway 28s ease-in-out infinite alternate}
+.hero-dust{position:absolute;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}
+@keyframes rays-sway{from{transform:rotate(-.8deg);opacity:.7}to{transform:rotate(.8deg);opacity:.9}}
+.hero-logo{animation:none}
+.hero.is-ready .hero-logo{animation:rise-in 900ms cubic-bezier(.2,.7,.2,1) both,float-soft 7s ease-in-out 1s infinite alternate;animation-delay:var(--hd,0ms),1s}
+.hero.is-prep .hero-in{opacity:0}
+.hero.is-ready .hero-in{animation:rise-in 900ms cubic-bezier(.2,.7,.2,1) both;animation-delay:var(--hd,0ms)}
+@keyframes rise-in{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+@keyframes float-soft{from{translate:0 0}to{translate:0 -10px}}
+
+/* perjalanan waktu halaman (js/night.js) */
+.journey-tint{position:fixed;inset:0;z-index:-1;pointer-events:none}
+.journey-morning{background:linear-gradient(180deg,#FFF7DD 0%,#FFFFFF 55%);opacity:calc(1 - var(--journey,0) * 1.2)}
+.journey-evening{background:linear-gradient(180deg,#FFFFFF 40%,#DCEBF7 100%);opacity:calc(var(--journey,0) * .95)}
+
+/* langit malam di atas footer */
+.night{position:relative;height:clamp(240px,40vw,400px);margin-top:3rem;overflow:hidden;background:linear-gradient(180deg,rgba(255,255,255,0) 0%,#9CC3E0 22%,#3F6E95 52%,#1B4261 78%,#0E2A3F 100%)}
+.stars{position:absolute;inset:0;opacity:var(--night,1)}
+.stars i{position:absolute;border-radius:50%;background:#fff;animation:twinkle 4s ease-in-out infinite}
+@keyframes twinkle{0%,100%{opacity:.95}50%{opacity:.25}}
+.night-moon{position:absolute;right:clamp(1rem,14%,12rem);top:18%;width:clamp(84px,12vw,128px);aspect-ratio:1;opacity:calc(.25 + var(--night,1) * .75);transform:translateY(calc((1 - var(--night,1)) * 44px))}
+.night-moon img{width:100%;height:100%;border-radius:50%;background:#fff;box-shadow:0 0 0 8px rgba(255,255,255,.12),0 0 70px 22px rgba(190,222,248,.5)}
+.hills{position:absolute;left:0;right:0;bottom:-1px;width:100%;height:42%;display:block}
+@media(prefers-reduced-motion:reduce){
+  .hero-rays,.hero.is-ready .hero-logo,.stars i{animation:none}
+  .hero.is-prep .hero-in{opacity:1}
+  .hero.is-ready .hero-in{animation:none}
+  .hero.is-ready .hero-logo{animation:none}
+}
